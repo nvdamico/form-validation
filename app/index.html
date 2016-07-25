@@ -17,42 +17,58 @@
 
 <!-- apply angular app and controller to our body -->
 <body ng-app="validationApp" ng-controller="mainController">
-<div class="container">
-<div class="col-sm-8 col-sm-offset-2">
-    
-    <!-- PAGE HEADER -->
-    <div class="page-header"><h1>AngularJS Form Validation</h1></div>
-   
-    <!-- FORM -->
-    <!-- pass in the variable if our form is valid or invalid -->
-    <form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
-
-        <!-- NAME -->
-        <div class="form-group">
-            <label>Name</label>
-            <input type="text" name="name" class="form-control" ng-model="name" required>
-            <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">You name is required.</p>
-        </div>
-
-        <!-- USERNAME -->
-        <div class="form-group">
-            <label>Username</label>
-            <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="8">
-        </div>
+    <div class="container">
+        <div class="col-sm-8 col-sm-offset-1">
         
-        <!-- EMAIL -->
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" name="email" class="form-control" ng-model="email">
-            <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
-        </div>
-        
-        <!-- SUBMIT BUTTON -->
-        <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
-        
-    </form>
+            <!-- PAGE HEADER -->
+            <div class="page-header"><h1>Credit Application</h1></div>
+            <h5>**All fields are required</h5>
+           
+            <form name="creditForm" ng-submit="submitForm(creditForm.$valid)" novalidate> 
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" name="firstName" class="form-control" ng-model="user.firstName" required>
+                    <p ng-show="creditForm.firstName.$invalid && !creditForm.firstName.$pristine" class="help-block">Please enter your first name.</p>
+                </div>
 
-</div><!-- col-sm-8 -->
-</div><!-- /container -->
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" name="lastName" class="form-control" ng-model="user.lastName" required>
+                    <p ng-show="creditForm.lastName.$invalid && !creditForm.lastName.$pristine" class="help-block">Please enter your last name.</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" name="address" class="form-control" ng-model="user.address" required>
+                    <p ng-show="creditForm.address.$invalid && !creditForm.address.$pristine" class="help-block">Please enter your address.</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Social Security Number</label>
+                    <input type="text" name="ssn" class="form-control" ng-model="user.ssn" required ng-minlength="9" ng-maxlength="9" ng-pattern="ssnNumbers">
+                    <p ng-show="creditForm.ssn.$invalid && !creditForm.ssn.$pristine" class="help-block">Your SSN needs to be 9 digits long and can only contain numbers.</p>
+                    <p ng-show="creditForm.ssn.$valid && !isValidSSN()" class="help-block">This SSN is not valid.</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" name="email" class="form-control" ng-model="user.email">
+                    <p ng-show="creditForm.email.$invalid && !creditForm.email.$pristine" class="help-block">Please enter a valid email.</p>
+                </div>
+                
+                <div class="form-group">
+                    <label>Confirm Email</label>
+                    <input type="email" name="emailConfirm" class="form-control" ng-model="user.emailConfirm">
+                    <p ng-show="creditForm.emailConfirm.$invalid && !creditForm.emailConfirm.$pristine" class="help-block">Please confirm your email.</p>
+                    <p ng-show="!creditForm.emailConfirm.$prinstine && creditForm.email.$valid && creditForm.emailConfirm.$valid && !confirmEmailMatch()" class="help-block">This does not match the email entered above.</p>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" ng-disabled="creditForm.$invalid">Submit</button>
+                
+            </form>
+
+        </div>
+    </div>
 </body>
+
 </html>
